@@ -55,7 +55,6 @@ func main() {
 		logrus.Fatalf("No primary node found for replica set %v", dataReplSetName)
 	}
 
-	logrus.Infof("%v replica set initialized successfully", cfgReplSetName)
 	logrus.Info("Bootstrap finished")
 
 	logrus.Infof("Starting HTTP server on port %v", config.Port)
