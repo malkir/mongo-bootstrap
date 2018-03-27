@@ -2,7 +2,6 @@ version: "3.3"
 
 networks:
   net:
-    driver: bridge
 
 services:
 
@@ -10,28 +9,37 @@ services:
     image: mongo:3.4
     container_name: m1
     command: mongod --replSet mwe --smallfiles --port 27017
-    expose:
-      - 27017
     networks:
       - net
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.mongo.role == data1
 
   m2:
     image: mongo:3.4
     container_name: m2
     command: mongod --replSet mwe --smallfiles --port 27017
-    expose:
-      - 27017
     networks:
       - net
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.mongo.role == data1
 
   m3:
     image: mongo:3.4
     container_name: m3
     command: mongod --replSet mwe --smallfiles --port 27017
-    expose:
-      - 27017
     networks:
       - net
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.mongo.role == data1
 
   bootstrap:
     image: malkir/mongo-bootstrap:latest
@@ -42,3 +50,8 @@ services:
       - '-dataSet=mwe/m1:27017,m2:27017,m3:27017'
     networks:
       - net
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.mongo.role == data1
