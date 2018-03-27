@@ -26,13 +26,7 @@ func (s *HttpServer) Start() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		cfgrs, err := GetReplicaSet(s.Config.ConfigSet)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
 		sets[0] = *datars
-		sets[1] = *cfgrs
 
 		b, err := json.MarshalIndent(sets, "", "  ")
 		if err != nil {
